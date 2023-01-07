@@ -34,7 +34,7 @@ const Pet = mongoose.model(
         required: true,
       },
       hypoallergenic: {
-        type: Boolean,
+        type: String,
       },
       dietaryRestrictions: {
         type: String,

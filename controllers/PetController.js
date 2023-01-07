@@ -26,6 +26,12 @@ module.exports = class PetController {
     const available = true;
 
     // validations
+
+    // if (images.length === 0) {
+    //   res.status(422).json({ message: 'At least one image is mandatory' });
+    //   return;
+    // }
+
     if (!type) {
       res.status(422).json({ message: 'Type is mandatory' });
       return;
@@ -61,11 +67,6 @@ module.exports = class PetController {
       return;
     }
 
-    if (!images) {
-      res.status(422).json({ message: 'At least one image is mandatory' });
-      return;
-    }
-
     //get pet owner
     const token = getToken(req);
     const user = await getUserByToken(token);
@@ -95,6 +96,8 @@ module.exports = class PetController {
     images.map((image) => {
       pet.images.push(image.filename);
     });
+
+    console.log(images);
 
     try {
       const newPet = await pet.save();
@@ -140,7 +143,6 @@ module.exports = class PetController {
       pets,
     });
   }
-
 
   // get a specific pet
   static async getPetById(req, res) {
@@ -316,10 +318,7 @@ module.exports = class PetController {
       updatedData.available = available;
     }
 
-    if (images.length === 0) {
-      res.status(422).json({ message: 'At least one image is mandatory' });
-      return;
-    } else {
+    if (images.lenght > 0) {
       updatedData.images = [];
       images.map((image) => {
         updatedData.images.push(image.filename);
