@@ -205,6 +205,7 @@ module.exports = class PetController {
     });
   }
 
+  //EDIT
   static async updatePet(req, res) {
     const id = req.params.id;
     const {
@@ -327,7 +328,7 @@ module.exports = class PetController {
 
     await Pet.findByIdAndUpdate(id, updatedData);
 
-    res.status(200).json({ message: 'Pet updated with success' });
+    res.status(200).json({ pet: pet, message: 'Pet updated with success' });
   }
 
   static async schedule(req, res) {
@@ -350,7 +351,7 @@ module.exports = class PetController {
     if (pet.user._id.toString() === user._id.toString()) {
       res
         .status(402)
-        .json({ message: 'You can not schedule a visit with your own pet' });
+        .json({ message: 'You can not schedule a visit to your own pet' });
       return;
     }
 
@@ -359,7 +360,7 @@ module.exports = class PetController {
       if (pet.adopter._id.equals(user._id)) {
         res
           .status(402)
-          .json({ message: 'You already schedule a visit with this pet' });
+          .json({ message: 'You already schedule a visit to this pet' });
         return;
       }
     }

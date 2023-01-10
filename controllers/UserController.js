@@ -152,6 +152,7 @@ module.exports = class UserController {
       req.body;
 
     let image = '';
+    
 
     if (req.file) {
       image = req.file.filename;
@@ -213,7 +214,7 @@ module.exports = class UserController {
 
     try {
       //returns user updated data
-      const userUpdated = await User.findOneAndUpdate(
+      await User.findOneAndUpdate(
         { _id: user._id },
         { $set: user },
         { new: true }
@@ -223,7 +224,7 @@ module.exports = class UserController {
         .status(200)
         .json({ message: 'User updated with success', data: userUpdated });
     } catch (error) {
-      req.status(500).json({ message: error });
+      res.status(500).json({ message: error });
     }
   }
 };
