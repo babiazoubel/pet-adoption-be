@@ -130,7 +130,7 @@ module.exports = class UserController {
   static async getUserById(req, res) {
     const id = req.params.id;
 
-    const user = await User.findById(id)
+    const user = await User.findById(id);
 
     if (!user) {
       res.status(422).json({
@@ -152,7 +152,6 @@ module.exports = class UserController {
       req.body;
 
     let image = '';
-    
 
     if (req.file) {
       image = req.file.filename;
@@ -163,11 +162,14 @@ module.exports = class UserController {
       res.status(422).json({ message: 'Name is mandatory' });
       return;
     }
+    user.name = name;
 
     if (!lastName) {
       res.status(422).json({ message: 'Last name is mandatory' });
       return;
     }
+
+    user.lastName = lastName;
 
     if (!email) {
       res.status(422).json({ message: 'Email is mandatory' });
@@ -220,9 +222,7 @@ module.exports = class UserController {
         { new: true }
       );
 
-      res
-        .status(200)
-        .json({ message: 'User updated with success', data: userUpdated });
+      res.status(200).json({ message: 'User updated with success' });
     } catch (error) {
       res.status(500).json({ message: error });
     }

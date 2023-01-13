@@ -97,8 +97,6 @@ module.exports = class PetController {
       pet.images.push(image.filename);
     });
 
-    console.log(images);
-
     try {
       const newPet = await pet.save();
       res.status(201).json({
