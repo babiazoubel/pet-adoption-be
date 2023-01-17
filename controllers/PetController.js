@@ -108,13 +108,23 @@ module.exports = class PetController {
     }
   }
 
-  // get all registered pets
   static async getAll(req, res) {
-    const pets = await Pet.find().sort('-createdAt');
-
-    res.status(200).json({
-      pets: pets,
-    });
+    const query = req.query;
+    if (Object.keys(query).length === 0) {
+      Pet.find({}, (err, pets) => {
+        if (err) return res.status(500).send(err);
+        res.status(200).json({
+          pets,
+        });
+      }).sort('-createdAt');
+    } else {
+      Pet.find(query, (err, pets) => {
+        if (err) return res.status(500).send(err);
+        res.status(200).json({
+          pets,
+        });
+      }).sort('-createdAt');
+    }
   }
 
   // get all registered pets
